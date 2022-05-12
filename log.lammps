@@ -1,0 +1,147 @@
+LAMMPS (29 Sep 2021 - Update 2)
+# Big colloid particles and small LJ particles
+
+units		lj
+atom_style	sphere
+dimension	2
+
+lattice		sq 0.01
+Lattice spacing in x,y,z = 10.000000 10.000000 10.000000
+region		box block 0 30 0 30 -0.5 0.5
+create_box	2 box
+Created orthogonal box = (0.0000000 0.0000000 -5.0000000) to (300.00000 300.00000 5.0000000)
+  2 by 2 by 1 MPI processor grid
+create_atoms	1 box
+Created 900 atoms
+  using lattice units in orthogonal box = (0.0000000 0.0000000 -5.0000000) to (300.00000 300.00000 5.0000000)
+  create_atoms CPU = 0.002 seconds
+
+set		group all type/fraction 2 0.96 23984
+Setting atom values ...
+  861 settings made for type/fraction
+
+set		type 1 mass 9
+Setting atom values ...
+  39 settings made for mass
+set		type 2 mass 1
+Setting atom values ...
+  861 settings made for mass
+
+velocity	all create 3.0 87287 loop geom
+
+# multi neighbor and comm for efficiency
+
+neighbor	1 multi
+neigh_modify	delay 0
+comm_modify     mode multi
+
+# colloid potential
+
+pair_style	colloid 12.5
+pair_coeff	1 1  1.0 1.0 5.0 5.0 12.5
+pair_coeff	1 2  5.0 1.0 5.0 0.0 7.0
+pair_coeff	2 2 10.0 1.0 0.0 0.0 2.5
+compute myRDF all rdf 50
+fix rdf all ave/time 50 1 500 c_myRDF[*] file rdf/tmp_3.0.rdf mode vector
+fix		1 all npt temp 2.0 2.0 1.0 iso 0.0 1.0 10.0 drag 1.0 	        mtk no pchain 0 tchain 1
+fix		2 all enforce2d
+
+dump		1 all atom 1000 dump.colloid
+
+#dump		2 all image 1000 image.*.jpg type type #		zoom 1.5 center d 0.5 0.5 0.5
+#dump_modify	2 pad 5 adiam 1 5.0 adiam 2 1.5
+
+#dump		3 all movie 1000 movie.mpg type type #		zoom 1.5 center d 0.5 0.5 0.5
+#dump_modify	3 pad 5 adiam 1 5.0 adiam 2 1.5
+
+thermo_style	custom step temp epair etotal press vol
+thermo		1000
+
+timestep	0.005
+
+run		5000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- neighbor multi command: doi:10.1016/j.cpc.2008.03.005, doi:10.1007/s40571-020-00361-2
+
+@Article{Intveld08,
+ author =  {P.{\,}J.~in{\,}'t~Veld and S.{\,}J.~Plimpton and G.{\,}S.~Grest},
+ title =   {Accurate and Efficient Methods for Modeling Colloidal
+            Mixtures in an Explicit Solvent using Molecular Dynamics},
+ journal = {Comp.~Phys.~Comm.},
+ year =    2008,
+ volume =  179,
+ pages =   {320--329}
+}
+
+@article{Stratford2018,
+ author = {Stratford, Kevin and Shire, Tom and Hanley, Kevin},
+ title = {Implementation of multi-level contact detection in LAMMPS},
+ year = {2018}
+}
+
+@article{Shire2020,
+ author = {Shire, Tom and Hanley, Kevin J. and Stratford, Kevin},
+ title = {DEM simulations of polydisperse media: efficient contact
+          detection applied to investigate the quasi-static limit},
+ journal = {Computational Particle Mechanics},
+ year = {2020}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Neighbor list info ...
+  update every 1 steps, delay 0 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 13.5
+  ghost atom cutoff = 13.5
+  binsize = 1.75, bins = 172 172 6
+  2 neighbor lists, perpetual/occasional/extra = 1 1 0
+  (1) pair colloid, perpetual
+      attributes: half, newton on
+      pair build: half/multi/newton
+      stencil: half/multi/2d
+      bin: multi
+  (2) compute rdf, occasional, copy from (1)
+      attributes: half, newton on
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 5.732 | 5.732 | 5.732 Mbytes
+Step Temp E_pair TotEng Press Volume 
+       0            3 -2.2136534e-06    2.9966645   0.02996659        90000 
+    1000     2.446156 0.0043299334     2.447768  0.037393397    60234.542 
+    2000     2.695827  0.021789888    2.7146215   0.20973424     13590.53 
+    3000    2.4127463   0.09766479    2.5077303   0.75876142     5080.409 
+    4000    2.0498048    0.1167247     2.164252   0.99820799    3849.2267 
+    5000    1.9996443  0.085422335    2.0828448     1.005529    3773.2888 
+Loop time of 0.276727 on 4 procs for 5000 steps with 900 atoms
+
+Performance: 7805515.485 tau/day, 18068.323 timesteps/s
+99.4% CPU use with 4 MPI tasks x no OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0.075049   | 0.077508   | 0.079497   |   0.6 | 28.01
+Neigh   | 0.040739   | 0.041958   | 0.042887   |   0.4 | 15.16
+Comm    | 0.065344   | 0.067085   | 0.069941   |   0.7 | 24.24
+Output  | 0.0012451  | 0.0014519  | 0.0015216  |   0.3 |  0.52
+Modify  | 0.070803   | 0.072203   | 0.074331   |   0.5 | 26.09
+Other   |            | 0.01652    |            |       |  5.97
+
+Nlocal:        225.000 ave         277 max         184 min
+Histogram: 1 1 0 0 0 1 0 0 0 1
+Nghost:        291.750 ave         307 max         276 min
+Histogram: 1 0 0 0 1 1 0 0 0 1
+Neighs:        1475.00 ave        1874 max        1200 min
+Histogram: 2 0 0 0 0 0 1 0 0 1
+
+Total # of neighbors = 5900
+Ave neighs/atom = 6.5555556
+Neighbor list builds = 748
+Dangerous builds = 0
+Total wall time: 0:00:00

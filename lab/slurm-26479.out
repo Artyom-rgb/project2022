@@ -1,0 +1,44 @@
+=========================================
+SLURM_JOB_ID = 26479
+SLURM_JOB_NODELIST = node20-19
+SLURM_CPUS_ON_NODE = 1
+SLURM_JOB_PARTITION = RT
+SLURM_TASK_PID = 814235
+==========================================
+[I 2022-05-09 00:07:26.881 ServerApp] jupyterlab | extension was successfully linked.
+[I 2022-05-09 00:07:27.831 ServerApp] nbclassic | extension was successfully linked.
+[I 2022-05-09 00:07:27.910 LabApp] JupyterLab extension loaded from /home/common/studtscm11/anaconda3/lib/python3.9/site-packages/jupyterlab
+[I 2022-05-09 00:07:27.910 LabApp] JupyterLab application directory is /home/common/studtscm11/anaconda3/share/jupyter/lab
+[I 2022-05-09 00:07:27.915 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2022-05-09 00:07:27.935 ServerApp] nbclassic | extension was successfully loaded.
+[I 2022-05-09 00:07:27.935 ServerApp] Serving notebooks from local directory: /home/common/studtscm11/colloid/lab
+[I 2022-05-09 00:07:27.935 ServerApp] Jupyter Server 1.4.1 is running at:
+[I 2022-05-09 00:07:27.935 ServerApp] http://localhost:8888/lab?token=196cffc83e94d21868819fcc1ab38d8c8364c0df48af6897
+[I 2022-05-09 00:07:27.936 ServerApp]  or http://127.0.0.1:8888/lab?token=196cffc83e94d21868819fcc1ab38d8c8364c0df48af6897
+[I 2022-05-09 00:07:27.936 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[W 2022-05-09 00:07:27.944 ServerApp] No web browser found: could not locate runnable browser.
+[C 2022-05-09 00:07:27.944 ServerApp] 
+    
+    To access the server, open this file in a browser:
+        file:///home/common/studtscm11/.local/share/jupyter/runtime/jpserver-814251-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8888/lab?token=196cffc83e94d21868819fcc1ab38d8c8364c0df48af6897
+     or http://127.0.0.1:8888/lab?token=196cffc83e94d21868819fcc1ab38d8c8364c0df48af6897
+[W 2022-05-09 00:36:49.194 LabApp] Could not determine jupyterlab build status without nodejs
+[W 2022-05-09 00:36:53.117 ServerApp] 404 GET /api/contents/lesson25-03/melt?1652045813101 (::1): No such file or directory: lesson25-03/melt
+[W 2022-05-09 00:36:53.118 ServerApp] No such file or directory: lesson25-03/melt
+[W 2022-05-09 00:36:53.118 ServerApp] 404 GET /api/contents/lesson25-03/melt?1652045813101 (::1) 1.34ms referer=http://127.0.0.1:8888/lab
+[W 2022-05-09 00:38:48.676 ServerApp] Notebook Untitled.ipynb is not trusted
+[I 2022-05-09 00:38:52.946 ServerApp] Kernel started: 1e96fe86-2b25-47cb-8af1-272bb86c1c6e
+[I 2022-05-09 00:44:16.410 ServerApp] Starting buffering for 1e96fe86-2b25-47cb-8af1-272bb86c1c6e:ed8de950-9687-4ba4-9a99-5afadebb57e5
+[I 2022-05-09 23:23:44.198 ServerApp] 302 GET / (::1) 0.41ms
+[W 2022-05-09 23:23:44.224 ServerApp] Clearing invalid/expired login cookie username-localhost-8888
+[W 2022-05-09 23:23:44.225 LabApp] Clearing invalid/expired login cookie username-localhost-8888
+[I 2022-05-09 23:23:44.225 LabApp] 302 GET /lab? (::1) 1.00ms
+[W 2022-05-09 23:23:47.921 ServerApp] 401 POST /login?next=%2Flab%3F (::1) 0.90ms referer=http://localhost:8888/login?next=%2Flab%3F
+[W 2022-05-09 23:24:04.356 ServerApp] 401 POST /login?next=%2Flab%3F (::1) 8.08ms referer=http://localhost:8888/login?next=%2Flab%3F
+[W 2022-05-09 23:24:14.008 ServerApp] 401 POST /login?next=%2Flab%3F (::1) 6.19ms referer=http://localhost:8888/login?next=%2Flab%3F
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 26479.0 ON node20-19 CANCELLED AT 2022-05-09T23:25:38 ***
+[C 2022-05-09 23:25:38.326 ServerApp] received signal 15, stopping
+slurmstepd: error: *** JOB 26479 ON node20-19 CANCELLED AT 2022-05-09T23:25:38 ***

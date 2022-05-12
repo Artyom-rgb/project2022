@@ -1,0 +1,3 @@
+sbatch -N 1 --wrap=srun jupyter lab
+cat slurm-26479.out
+on PC ssh -NL localhost:8888:localhost:8888 -J mipt studtscm11@node20-19
